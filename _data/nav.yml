@@ -1,6 +1,6 @@
 - href: /page/timing.html
   icon: fa fa-clock-o
-  title: 时间轴
+  title: 目　录
 
 - href: /page/category.html
   icon: fa fa-tags
@@ -11,5 +11,5 @@
   title: 阅　读
 
 - href: /page/about.html
-  icon: fa fa-paper-plane-o
+  icon: fa  fa-user-circle
   title: 关　于
