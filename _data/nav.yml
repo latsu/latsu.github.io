@@ -3,7 +3,7 @@
   title: 目　录
 
 - href: /page/category.html
-  icon: fa fa-tags
+  icon: fa fa-tasks
   title: 分　类
 
 - href: /page/read.html
@@ -11,5 +11,5 @@
   title: 阅　读
 
 - href: /page/about.html
-  icon: fa fa-user-circle-o
+  icon: fa fa-life-saver
   title: 关　于
