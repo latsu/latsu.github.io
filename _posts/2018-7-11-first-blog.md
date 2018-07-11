@@ -1,7 +1,7 @@
 ---
 layout: post
-category: ['心得']
-title: 搭建博客心得
+category: ['心情']
+title: 终于有了自己的博客
 ---
 
 # 前言
@@ -27,8 +27,8 @@ Markdown语法很简单，查看教程 [**请猛戳这里**](http://www.markdown
 
 Jekyll 是一款 Github 自带的页面转换器，相当于是我们本地按照他的语法和规则写好代码，提交后，GitHub 会自动运行 Jeklly 把我们的代码转换成可读的 HTML
 
-它的中文官网在这里：<http://jekyllcn.com/>
-一些约定的文件位置、文件名规则、系统变量[详情](http://jekyllrb.com/docs/variables/)、判断的写法、循环的写法，文档里都有写，或者谷歌搜索。
+中文官网在这里：<http://jekyllcn.com/>
+一些约定的文件位置、文件名规则、系统变量[详情](http://jekyllrb.com/docs/variables/)、判断的写法、循环的写法，文档里都有写，或者[Google](https://www.google.com)搜索。
 
 ## 参考文章
  - [搭建 Github 博客小记](http://silverd.cn/2014/11/17/first-blog.html)
