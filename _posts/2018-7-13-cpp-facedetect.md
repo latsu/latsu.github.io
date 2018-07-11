@@ -14,9 +14,58 @@ title: 基于C++实现的实时视频人脸检测
 - Visual Studio 2017 vc15
 
 ## 2.配置OpenCV库
+
+1、**项目->属性->VC++目录**
+
+**包含目录**添加:
+
+	PATH\opencv\include\opencv2
+	PATH\opencv\include\opencv
+	PATH\opencv\include
+
+**库目录**添加:
+
+	PATH\opencv\x64\vc15\lib
+
+2、**项目->属性->连接器->输入->附加依赖项**
+
+	opencv_calib3d341.lib
+	opencv_core341.lib
+	opencv_dnn341.lib
+	opencv_features2d341.lib
+	opencv_flann341.lib
+	opencv_highgui341.lib
+	opencv_imgcodecs341.lib
+	opencv_imgproc341.lib
+	opencv_ml341.lib
+	opencv_objdetect341.lib
+	opencv_photo341.lib
+	opencv_shape341.lib
+	opencv_stitching341.lib
+	opencv_superres341.lib
+	opencv_video341.lib
+	opencv_videoio341.lib
+	opencv_videostab341.lib
+
 *参考：* [【Windows 7 x64】OpenCV 3.4.1 下载与安装详细教程](https://blog.csdn.net/JM_1013/article/details/80465705)
 
 ## 3.配置Libfacedetect扩展库
+
+1、**项目->属性->VC++目录**
+
+**包含目录**添加:
+
+	PATH\libfacedetect\include
+
+**库目录**添加:
+
+	PATH\libfacedetect\lib
+
+2、**项目->属性->连接器->输入->附加依赖项**
+
+	olibfacedetect-x64.lib
+
+
 *参考：* 
 
 - [如何快糙好猛的使用Shiqi.Yu老师的公开人脸检测库（附源码）](https://blog.csdn.net/mr_curry/article/details/51804072
@@ -24,10 +73,51 @@ title: 基于C++实现的实时视频人脸检测
 - [OpenCV学习笔记（11）：libfacedetection人脸检测的配置与使用](https://blog.csdn.net/cv_jason/article/details/78819088)
 
 ## 4. 配置Libcurl扩展库
+
+1、**项目->属性->VC++目录**
+
+**包含目录**添加:
+
+	PATH\libcurl\include
+
+**库目录**添加:
+
+	PATH\libcurl\lib
+
+2、**项目->属性->连接器->输入->附加依赖项**
+
+	libcurl_a.lib
+	Ws2_32.lib
+	Wldap32.lib
+	winmm.lib
+	Crypt32.lib
+	Normaliz.lib
+
+
 *参考：*
 
 - [The Easy interface](https://curl.haxx.se/libcurl/c/)
 - [C/C++使用libcurl库实现post图片的两种方式](https://blog.csdn.net/LeeKitch/article/details/80194011)
+
+## 5.全局配置
+1、**配置环境变量**
+
+	PATH\libfacedetect\bin
+	PATH\opencv\x64\vc15\bin
+2、**项目->属性->C/C++->预处理器**
+
+预处理器定义:
+
+	CURL_STATICLIB
+	HTTP_ONLY
+	_CRT_SECURE_NO_WARNINGS
+
+3、**说明：**
+
+- opencv和libcurl的库需要编译。
+
+- opencv使用CMake编译，libcurl使用VS自带的命令行工具。
+
 
 # 实现代码
 
