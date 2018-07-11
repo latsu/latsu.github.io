@@ -1,10 +1,10 @@
 ---
 layout: post
-category: ['Python'，'OpenCv']
-title: 基于Python-OpenCv的视频实时人脸检测功能
+category: ['Python','OpenCV']
+title: 基于Python-OpenCV的视频实时人脸检测功能
 ---
 
-# python2.7和OpenCv2.4 环境配置
+# python2.7.15和OpenCV2.4.13 环境配置
 ## 1.windows 10
 
 **下载地址：** [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
@@ -39,7 +39,7 @@ pip install numpy
 
 参考：[http://www.numpy.org](http://www.numpy.org)
 
-4、安装OpenCv扩展
+4、安装OpenCV扩展
 
 ```python
 pip install opencv-python
