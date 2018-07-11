@@ -1,10 +1,10 @@
 ---
 layout: post
 category: ['Python','OpenCV']
-title: 基于Python-OpenCV的视频实时人脸检测功能
+title: 基于Python实现的实时视频人脸检测
 ---
 
-# python2.7.15和OpenCV2.4.13 环境配置
+# 环境配置
 ## 1.windows 10
 
 **下载地址：** [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
@@ -128,7 +128,7 @@ make -j4
 make install
 ```
 
-##3.功能实现
+# 功能实现
 
 新建一个文件名称：**RealFaceDetection.py**;
 
@@ -207,7 +207,7 @@ cv2.destroyAllWindows()
 
 ```
 
-## 4. 注意事项
+## 注意事项
 
 `由于OpenCV的库是开源的，用的是比较老的人脸检测和识别算法，开发者后期并没有对算法进行精度优化，所以`**建议**`不要在生产环境使用此功能，人脸检测的准确率和精度太低。`
 

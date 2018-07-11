@@ -1,10 +1,10 @@
 ---
 layout: post
 category: ['C++', 'OpenCV']
-title: 基于C++视频实时人脸检测系统
+title: 基于C++实现的实时视频人脸检测
 ---
-#基于C++视频实时人脸检测系统
-##1.工作平台
+# 环境配置
+## 1.工作平台
 
 **说明:** 
 
@@ -13,23 +13,24 @@ title: 基于C++视频实时人脸检测系统
 - Windows10 64位操作系统
 - Visual Studio 2017 vc15
 
-##2.配置OpenCV库
+## 2.配置OpenCV库
 *参考：* [【Windows 7 x64】OpenCV 3.4.1 下载与安装详细教程](https://blog.csdn.net/JM_1013/article/details/80465705)
 
-##3.配置Libfacedetect扩展库
+## 3.配置Libfacedetect扩展库
 *参考：* 
 
 - [如何快糙好猛的使用Shiqi.Yu老师的公开人脸检测库（附源码）](https://blog.csdn.net/mr_curry/article/details/51804072
 )
 - [OpenCV学习笔记（11）：libfacedetection人脸检测的配置与使用](https://blog.csdn.net/cv_jason/article/details/78819088)
 
-##4. 配置Libcurl扩展库
+## 4. 配置Libcurl扩展库
 *参考：*
 
 - [The Easy interface](https://curl.haxx.se/libcurl/c/)
 - [C/C++使用libcurl库实现post图片的两种方式](https://blog.csdn.net/LeeKitch/article/details/80194011)
 
-##5. 实现代码
+# 实现代码
+
 ```c++
 #include"facedetect-dll.h"
 #include<iostream>
@@ -177,7 +178,7 @@ int main() {
 	return 0;
 }
 ```
-**`需要优化的地方还是很多的，比如多个摄像头采用的方式可能是多线程或写配置文件等等，以后有时间在弄。`**
+### **`需要优化的地方还是很多的，比如多个摄像头采用的方式可能是多线程或写配置文件等等，以后有时间在弄。`**
 
-##参考文章
+## 参考文章
 - [从视频中提取图片，对图片做人脸检测并截取人脸区域](https://www.cnblogs.com/yamin/p/7338070.html)
