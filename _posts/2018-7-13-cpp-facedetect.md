@@ -104,6 +104,7 @@ title: 基于C++实现的实时视频人脸检测
 
 	PATH\libfacedetect\bin
 	PATH\opencv\x64\vc15\bin
+	
 2、**项目->属性->C/C++->预处理器**
 
 预处理器定义:
@@ -122,23 +123,24 @@ title: 基于C++实现的实时视频人脸检测
 # 实现代码
 
 ```c++
-#include"facedetect-dll.h"
-#include<iostream>
-#include<opencv2\opencv.hpp>
 #include <string>
+#include <iostream>
+#include <Windows.h>
 #include "curl/curl.h"
+#include "facedetect-dll.h"
+#include <opencv2\opencv.hpp>
+#include <time.h>
+#include <stdlib.h>
 #define DETECT_BUFFER_SIZE 0x20000
 
 using namespace std;
 using namespace cv;
 /**
- * author: Latsu
- * params:  string url
- *          string array header
- *          int size
- * return 服务器返回结果
- * POST人像图片到服务器
- */
+* author: Latsu
+* params:  string url
+*			string array header
+*			int size
+*/
 CURLcode curl_post_request(const string &url, string header[], int size)
 {
 	CURL *curl = curl_easy_init();
@@ -146,13 +148,14 @@ CURLcode curl_post_request(const string &url, string header[], int size)
 	struct curl_httppost *formpost = NULL;
 	struct curl_httppost *lastptr = NULL;
 	for (int i = 0; i < size; i++) {
-		curl_formadd(&formpost, &lastptr, 
-			CURLFORM_PTRNAME, "image[]", 
+		curl_formadd(&formpost, &lastptr,
+			CURLFORM_PTRNAME, "images[]",
 			CURLFORM_FILE, header[i].c_str(),
-			CURLFORM_CONTENTTYPE, "image/jpeg", 
+			CURLFORM_CONTENTTYPE, "image/jpeg",
 			CURLFORM_END);
 	}
-	if (curl) {
+	if (curl)
+	{
 		curl_easy_setopt(curl, CURLOPT_POST, 1);
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
@@ -167,89 +170,88 @@ CURLcode curl_post_request(const string &url, string header[], int size)
 	return result;
 }
 
-void faceDetection(const Mat&image) 
-{
-	Mat gray;
-	cvtColor(image, gray, CV_BGR2GRAY);
-	int * pResults = NULL;
-	unsigned char * pBuffer = (unsigned char *)malloc(DETECT_BUFFER_SIZE);
-	int doLandmark = 1;
-	pResults = facedetect_multiview_reinforce(pBuffer,
-	(unsigned char*)(gray.ptr(0)),
-		gray.cols,
-		gray.rows,
-		(int)gray.step,
-		1.1f, 3, 48, 0,
-		doLandmark);
-	if (int res = pResults ? *pResults : 0) {
-		string imagepath = "D:\\image\\header\\";
-		string *header = new string[res];
-		Mat result_multiview = image.clone();
-		for (int i = 0; i < res; i++) {
-			short * p = ((short*)(pResults + 1)) + 142 * i;
-			int x = p[0] - 20;
-			int y = p[1] - 60;
-			int w = p[2] + 30;
-			int h = p[3] + 60;
-			int neighbors = p[4];
-			int angle = p[5];
-			if (x < 0) { x = 0; }
-			if (y < 0) { y = 0; }
-			if (w < 0) { w = 0; }
-			if (h < 0) { h = 0; }
-			if (neighbors < 0) { neighbors = 0; }
-			if (angle < 0) { angle = 0; }
-			header[i] = imagepath + "headimg_" + std::to_string(i) + ".jpg";
-			Mat image_cut = Mat(result_multiview, Rect(x, y, w, h));
-			imwrite(header[i], image_cut);
-		}
-		//把剪切出来的头像post给php服务器
-		curl_global_init(CURL_GLOBAL_ALL);
-		string postUrlStr = "https://dev.api.gmall.gaopeng.com//api/camera/GP_SH_004";
-		//string postUrlStr = "121.41.44.70/api/test";
-		auto result = curl_post_request(postUrlStr, header, res);
-		//system("pause");
-		if (result != CURLE_OK) {
-			cerr << "curl_easy_perform() failed: " + string(curl_easy_strerror(result)) << endl;
-		} else {
-			//发送完成以后删除人像
-			for (int i = 0; i < res; i++) {
-				remove(header[i].c_str());
+void faceDetection(const Mat&frame, string hostHttp, int n, int real) {
+	string imagepath = "D:\\image\\original\\";
+	string imagename;
+	srand((unsigned)time(NULL));
+	if (n%real == 0) {
+		imagename = imagepath + "original_" + std::to_string(rand() + time(NULL)) + ".jpg";
+		imwrite(imagename, frame);
+		Mat image = imread(imagename.c_str(), IMREAD_COLOR);
+		Mat gray;
+		cvtColor(image, gray, CV_BGR2GRAY);
+		int * pResults = NULL;
+		unsigned char * pBuffer = (unsigned char *)malloc(DETECT_BUFFER_SIZE);
+		int doLandmark = 1;
+		pResults = facedetect_multiview_reinforce(pBuffer,
+			(unsigned char*)(gray.ptr(0)),
+			gray.cols,
+			gray.rows,
+			(int)gray.step,
+			1.1f, 3, 48, 0,
+			doLandmark);
+		if (int res = pResults ? *pResults : 0)
+		{
+			string imagepath = "D:\\image\\header\\";
+			string *header = new string[res];
+			srand((unsigned)time(NULL));
+			Mat result_multiview = image.clone();
+			for (int i = 0; i < res; i++)
+			{
+				short * p = ((short*)(pResults + 1)) + 142 * i;
+				int x = p[0] - 20;
+				int y = p[1] - 60;
+				int w = p[2] + 30;
+				int h = p[3] + 60;
+				int neighbors = p[4];
+				int angle = p[5];
+				if (x < 0) { x = 0; }
+				if (y < 0) { y = 0; }
+				if (w < 0) { w = 0; }
+				if (h < 0) { h = 0; }
+				if (neighbors < 0) { neighbors = 0; }
+				if (angle < 0) { angle = 0; }
+				header[i] = imagepath + "headimg_" + std::to_string(rand() + time(NULL)) + ".jpg";
+				Mat image_cut = Mat(result_multiview, Rect(x, y, w, h));
+				imwrite(header[i], image_cut);
 			}
+			//POST DATA
+			curl_global_init(CURL_GLOBAL_ALL);
+			auto result = curl_post_request(hostHttp, header, res);
+			if (result != CURLE_OK) {
+				cerr << "curl_easy_perform() failed: " + string(curl_easy_strerror(result)) << endl;
+			}
+			else {
+				//·¢ËÍÍê³ÉÒÔºóÉ¾³ýÈËÏñÍ¼Æ¬
+				for (int i = 0; i < res; i++)
+				{
+					remove(header[i].c_str());
+				}
+			}
+			curl_global_cleanup();
+			free(pResults);
 		}
-		curl_global_cleanup();
-		waitKey(0);
-		free(pResults);
+		remove(imagename.c_str());
 	}
-	
 }
 
-int main() {
-	//读取视频或摄像头
-	VideoCapture capture("rtsp://admin:admin@123@10.98.0.13:554/?tcp");
-	if (!capture.isOpened()) {
+int main(int argc, char *argv[]) {
+	VideoCapture capture(argv[1]);
+	if (!capture.isOpened())
+	{
 		cout << "Couldn't open the video file." << endl;
 		return 1;
 	}
-	string imagepath= "D:\\image\\original\\";
-	string imagename;
 	Mat frame;
 	int i = 1;
-	int real = 60;
+	int real = 25;
 	capture >> frame;
 	while (true) {
-		Sleep(1);
-		if (frame.empty())
-			break;
-		if (i%real == 0) {
-			imagename = imagepath + "originalImage_" + std::to_string(10000 + i) + ".jpg";
-			imwrite(imagename, frame);
-			Mat src = imread(imagename.c_str(), IMREAD_COLOR);
-			faceDetection(src);
-			remove(imagename.c_str());
-		}
+		Sleep(40);
 		i++;
-		waitKey(30);
+		if (frame.empty())
+			continue;//or break;
+		faceDetection(frame, argv[2], i, real);
 	}
 	return 0;
 }
