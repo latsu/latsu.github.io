@@ -385,7 +385,7 @@ update user set host = '%' where user = 'root';
 ```
 如果报错不用管，切换到mysql数据库，执行：
 
-![](/res/img/in_posts/2018/sql_install.png)
+![](/res/img/in_posts/2018/mysql_install.png)
 
 ##5. Redis服务器搭建
 
