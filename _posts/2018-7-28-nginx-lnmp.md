@@ -1,8 +1,10 @@
 ---
 layout: post
-category: ['Linx', 'Nginx','PHP','Redis','MySQL']
-title: Centos6.8 LNMP 编译安装
+category: ['Linux', 'Nginx','PHP','Redis','MySQL']
+title: CentOS6.8 LNMP 编译安装
 ---
+
+#Linux LNMP INSTALL
 
 ##1. Nginx 安装配置：
 
