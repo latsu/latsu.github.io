@@ -4,9 +4,8 @@ category: ['Linux', 'Nginx','PHP','Redis','MySQL']
 title: CentOS6.8 LNMP 编译安装
 ---
 
-#Linux LNMP INSTALL
 
-##1. Nginx 安装配置：
+## 1. Nginx 安装配置
 
 - 安装依赖扩展
 
@@ -251,7 +250,9 @@ http {
 ```
 
 **到此Nginx安装完成**
-##2. PHP 编译安装
+
+## 2. PHP 编译安装
+
 - 安装 libmcrypt 扩展库
 
 ```
@@ -323,7 +324,8 @@ chkconfig php-fpm on
 service php-fpm start
 ```
 
-##3. 编译安装redis扩展
+## 3. 编译安装redis扩展
+
 - 下载redis最新版本
 
 ```
@@ -348,7 +350,9 @@ make && make install
 ```
 extension = redis.so
 ```
-##4. YUM 安装 MySql（编译的太累）
+
+## 4. YUM 安装 MySql（编译的太累）
+
  - 使用yum命令安装
 
 ```
@@ -389,7 +393,7 @@ update user set host = '%' where user = 'root';
 
 ![](/res/img/in_posts/2018/mysql_install.png)
 
-##5. Redis服务器搭建
+## 5. Redis服务器搭建
 
 - 下载、安装redis server版本
 
@@ -437,7 +441,8 @@ redis-server /etc/redis/redis.conf
 ps -ef | grep redis
 ```
 
-##6. 废话两句
+## 6. 一些废话
+
 - 为什么不用**`centos7.x`**
  - 因为莫名其妙的BUG多啊。
 - 为什么要写这篇博客
