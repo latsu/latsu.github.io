@@ -353,24 +353,38 @@ extension = redis.so
 
 ## 4. YUM 安装 MySql（编译的太累）
 
- - 使用yum命令安装
+ - 检查系统是否安装其他版本的MySql数据库
 
 ```
-yum install mysql mysql-devel mysql-server
+yum list installed | grep mysql
+yum -y remove mysql-libs.x86_64
 ```
 
-- 修改MySql配置
+- 更新MySql的yum源
 
 ```
+wget http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
+rpm -ivh mysql-community-release-el6-5.noarch.rpm
+yum repolist all | grep mysql
+```
+- 安装配置
+
+```
+yum install mysql-community-server -y
+
 vim /etc/my.cnf 
+
 #设置编码
-default-character-set=utf8
+[mysqld]
+character-set-server=utf8
+
 ```
 
 - 添加开机启动
 
 ```
-chkconfig --add mysqld
+chkconfig --list | grep mysqld
+chkconfig mysqld on
 ```
 - 启动MySql
 
@@ -380,7 +394,7 @@ service mysqld start
 - 配置MySql
 
 ```
-mysqladmin -u root password 123456
+mysqladmin -u root password "password"
 
 mysql -uroot -p
 ```
@@ -389,9 +403,6 @@ mysql -uroot -p
 ```
 update user set host = '%' where user = 'root';
 ```
-如果报错不用管，切换到mysql数据库，执行：
-
-![](/res/img/in_posts/2018/mysql_install.png)
 
 ## 5. Redis服务器搭建
 
@@ -441,14 +452,6 @@ redis-server /etc/redis/redis.conf
 ps -ef | grep redis
 ```
 
-## 6. 一些废话
-
-- 为什么不用**`centos7.x`**
- - 因为莫名其妙的BUG多啊。
-- 为什么要写这篇博客
- - 新买了一台云服务器，配置的时候顺手记录一下。
-- 为什么...
- - PHP是世界上最好的语言。 
 
 
 
