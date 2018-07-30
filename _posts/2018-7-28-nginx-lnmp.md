@@ -363,8 +363,8 @@ yum -y remove mysql-libs.x86_64
 - 更新MySql的yum源
 
 ```
-wget http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm
-rpm -ivh mysql-community-release-el6-5.noarch.rpm
+wget http://repo.mysql.com/mysql57-community-release-el6-8.noarch.rpm
+rpm -ivh mysql57-community-release-el6-8.noarch.rpm
 yum repolist all | grep mysql
 ```
 - 安装配置
@@ -376,7 +376,8 @@ vim /etc/my.cnf
 
 #设置编码
 [mysqld]
-character-set-server=utf8
+explicit_defaults_for_timestamp=true
+skip-grant-tables
 
 ```
 
@@ -394,15 +395,21 @@ service mysqld start
 - 配置MySql
 
 ```
-mysqladmin -u root password "password"
+mysql -uroot mysql
+UPDATE user SET authentication_string=PASSWORD('password') WHERE User='root';
+```
+然后关闭配置文件里面的**`skip-grant-tables`**
 
-mysql -uroot -p
-```
-- 远程访问
+- 第一次登陆配置
 
 ```
-update user set host = '%' where user = 'root';
+update user set authentication_string=password('newpassword') where user="root";
+
+ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
+
+flush privileges;
 ```
+退出重新登陆就可以了。
 
 ## 5. Redis服务器搭建
 
