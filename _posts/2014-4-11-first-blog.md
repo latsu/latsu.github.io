@@ -30,5 +30,4 @@ Jekyll 是一款 Github 自带的页面转换器，相当于是我们本地按�
 中文官网在这里：<http://jekyllcn.com/>
 一些约定的文件位置、文件名规则、系统变量[详情](http://jekyllrb.com/docs/variables/)、判断的写法、循环的写法，文档里都有写，或者[Google](https://www.google.com)搜索。
 
-## 参考文章
- - [搭建 Github 博客小记](http://silverd.cn/2014/11/17/first-blog.html)
+
